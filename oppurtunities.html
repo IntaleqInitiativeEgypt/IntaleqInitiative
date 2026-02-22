@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابتك للفرص | إنطلق</title>
+    <link rel="icon" href="logoRemove.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2C5F2D;
+            --secondary: #F18F01;
+            --bg-light: #F9FBF9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            padding: 50px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            right: 0;
+            top: 20px;
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .header-title i {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* نظام الفلترة - Filtration Style */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            padding: 10px 22px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* شبكة الفرص */
+        .opportunities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .opp-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 4px solid transparent;
+        }
+
+        /* Animation for filtering */
+        .opp-card.hidden {
+            display: none;
+        }
+
+        .opp-card:hover {
+            transform: translateY(-10px);
+            border-bottom-color: var(--secondary);
+        }
+
+        .card-content {
+            padding: 30px;
+        }
+
+        .card-tag {
+            background: var(--primary);
+            color: white;
+            padding: 4px 14px;
+            font-size: 0.85rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .card-content i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .opp-card h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .opp-card p {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .action-link {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+
+        .action-link:hover {
+            gap: 10px;
+        }
+
+        /* Featured Banner */
+        .featured-banner {
+            background: linear-gradient(135deg, var(--primary), #1e3f1e);
+            border-radius: 25px;
+            padding: 40px;
+            color: white;
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .banner-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .banner-btn {
+            background: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .banner-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 0 30px;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .back-btn { position: relative; margin-bottom: 20px; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+            <div class="header-title">
+                <i class="fas fa-door-open"></i>
+                <h1>بوابتك للفرص</h1>
+                <p class="subtitle">استخدم الفلاتر أدناه لاختيار نوع الفرصة المناسبة لك</p>
+            </div>
+        </header>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterSelection('all')">الكل</button>
+            <button class="filter-btn" onclick="filterSelection('scholarship')">منح دراسية</button>
+            <button class="filter-btn" onclick="filterSelection('internship')">تدريب عملي</button>
+            <button class="filter-btn" onclick="filterSelection('competition')">مسابقات</button>
+            <button class="filter-btn" onclick="filterSelection('volunteer')">تطوع</button>
+        </div>
+
+        <div class="opportunities-grid" id="oppGrid">
+
+            <div class="opp-card scholarship">
+                <div class="card-content">
+                    <span class="card-tag">منح دراسية</span>
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>منحة التميز الأكاديمي</h2>
+                    <p>فرص دراسية ممولة بالكامل في أفضل الجامعات لعام 2026، مخصصة للطلاب المبدعين.</p>
+                    <a href="#" class="action-link">تفاصيل التقديم <i class="fas fa-chevron-left"></i></a>
+                </div>
+            </div>
+
+            <div class="opp-card internship">
+                <div class="card-content">
+                    <span class="card-tag">تدريب عملي</span>
+                    <i class="fas fa-laptop-code"></i>
+                    <h2>معسكر البرمجة المكثف</h2>
+                    <p>تدريب عملي لمدة 3 أشهر لتعلم تقنيات تطوير الويب والذكاء الاصطناعي مع شهادة معتمدة.</p>
+                    <a href="#" class="action-link">سجل الآن <i class="fas fa-chevron-left"></i></a>
+                </div>
+            </div>
+
+            <div class="opp-card competition">
+                <div class="card-content">
+                    <span class="card-tag">مسابقات</span>
+                    <i class="fas fa-trophy"></i>
+                    <h2>تحدي المبتكرين الصغار</h2>
+                    <p>مسابقة قومية لاختيار أفضل فكرة مشروع مجتمعي، مع جوائز مالية ودعم تقني.</p>
+                    <a href="#" class="action-link">شارك بفكرتك <i class="fas fa-chevron-left"></i></a>
+                </div>
+            </div>
+
+            <div class="opp-card volunteer">
+                <div class="card-content">
+                    <span class="card-tag">تطوع</span>
+                    <i class="fas fa-users"></i>
+                    <h2>برنامج السفراء الشباب</h2>
+                    <p>انضم لفريق عمل "إنطلق" كمتطوع وساهم في نشر ثقافة اكتشاف المواهب في منطقتك.</p>
+                    <a href="#" class="action-link">قدم طلبك <i class="fas fa-chevron-left"></i></a>
+                </div>
+            </div>
+
+            <div class="opp-card scholarship">
+                <div class="card-content">
+                    <span class="card-tag">منح دراسية</span>
+                    <i class="fas fa-university"></i>
+                    <h2>منحة القادة المبدعين</h2>
+                    <p>منحة مخصصة للدراسات العليا في مجالات الإدارة والقيادة بالتعاون مع مؤسسات دولية.</p>
+                    <a href="#" class="action-link">احجز مكانك <i class="fas fa-chevron-left"></i></a>
+                </div>
+            </div>
+
+            <div class="opp-card competition">
+                <div class="card-content">
+                    <span class="card-tag">مسابقات</span>
+                    <i class="fas fa-paint-brush"></i>
+                    <h2>جائزة الفن الرقمي</h2>
+                    <p>لمبدعي التصميم والجرافيك، شارك في أكبر مسابقة للفنون الرقمية على مستوى الوطن العربي.</p>
+                    <a href="#" class="action-link">تعرف على الشروط <i class="fas fa-chevron-left"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="featured-banner">
+            <div class="banner-text">
+                <h3>لديك فرصة تود مشاركتها؟</h3>
+                <p>تواصل معنا لإدراج فرصك التعليمية أو التدريبية ضمن بوابتنا.</p>
+            </div>
+            <a href="#" class="banner-btn">تواصل معنا</a>
+        </div>
+
+        <footer>
+            <p>© 2026 مبادرة إنطلق - بكرة بينادينا. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+
+    <script>
+        function filterSelection(category) {
+            const cards = document.getElementsByClassName("opp-card");
+            const btns = document.getElementsByClassName("filter-btn");
+
+            // تحديث حالة الأزرار (Active)
+            for (let btn of btns) {
+                btn.classList.remove("active");
+                if (btn.innerText.includes(getCategoryName(category))) {
+                    btn.classList.add("active");
+                }
+                if (category === 'all' && btn.innerText === 'الكل') {
+                    btn.classList.add("active");
+                }
+            }
+
+            // تصفية البطاقات
+            for (let card of cards) {
+                if (category === "all") {
+                    card.classList.remove("hidden");
+                } else {
+                    if (card.classList.contains(category)) {
+                        card.classList.remove("hidden");
+                    } else {
+                        card.classList.add("hidden");
+                    }
+                }
+            }
+        }
+
+        // مساعدة لربط اسم الفئة بالعربي بالـ class
+        function getCategoryName(cat) {
+            if (cat === 'scholarship') return 'منح دراسية';
+            if (cat === 'internship') return 'تدريب عملي';
+            if (cat === 'competition') return 'مسابقات';
+            if (cat === 'volunteer') return 'تطوع';
+            return 'الكل';
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>انطلق | بكرة بينادينا</title>
+    <link rel="icon" href="logoRemove.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2C5F2D;
+            --secondary: #2C5F2D;
+            --accent: #2C5F2D;
+            --dark: #F18F01;
+            --light: #F5F0E6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: white;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            padding: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo img {
+            width: 350px;
+            height: auto;
+            margin: 0 auto 10px;
+            object-fit: contain;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin: 50px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            width: 320px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border-top: 6px solid var(--accent);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(241, 143, 1, 0.15);
+        }
+
+        .card:nth-child(2) { border-top-color: var(--dark); }
+        .card:nth-child(3) { border-top-color: #4A90E2; }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 900;
+        }
+
+        .card p {
+            color: #555;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 35px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(44, 95, 45, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--dark);
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        footer {
+            background: #fafafa;
+            padding: 40px 0;
+            margin-top: 50px;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .social-icon:hover {
+            background: var(--dark);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.08;
+            border-radius: 50%;
+        }
+
+        .shape-1 {
+            width: 400px; height: 400px;
+            background: var(--primary);
+            top: -150px; right: -100px;
+        }
+
+        .shape-2 {
+            width: 300px; height: 300px;
+            background: var(--dark);
+            bottom: -100px; left: -100px;
+        }
+
+        @media (max-width: 768px) {
+            .logo img { width: 280px; }
+            .card { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="logoRemove.png" alt="انطلق">
+            </div>
+            <p class="tagline">بنمي الكنز اللي جواك عشان تنفع بيه نفسك وبلدك</p>
+            <a href="#" class="btn">انضم لمجتمعنا الآن</a>
+        </header>
+
+        <div class="main-content">
+            <div class="card">
+                <div class="card-icon">🔍</div>
+                <h2>رؤيتنا للتحديات</h2>
+                <p>نحلل الواقع ونفهم جذور المشكلات لنصنع معاً حلولاً مبتكرة تُغير المستقبل.</p>
+                <a href="challenges.html" class="btn btn-outline">اكتشف المزيد</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📰</div>
+                <h2>نبض المعرفة</h2>
+                <p>ابقَ على اطلاع بأحدث التطورات العلمية، وتقنيات تطوير الذات التي تهمك في رحلتك.</p>
+                <a href="knowledge.html" class="btn btn-outline">تصفح الأخبار</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🎓</div>
+                <h2>بوابتك للفرص</h2>
+                <p>لا تدع الشغف يتوقف! استعرض أحدث المنح التعليمية والبرامج التدريبية المتاحة لك.</p>
+                <a href="oppurtunities.html" class="btn btn-outline">استعرض المنح</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="#" class="social-icon" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-icon" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-icon" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="social-icon" aria-label="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+        <p>© 2026 مبادرة إنطلق - بكرة بينادينا</p>
+    </footer>
+</body>
+</html>
