@@ -26,6 +26,7 @@
             background-color: var(--bg-light);
             color: #333;
             line-height: 1.8;
+            overflow-x: hidden;
         }
 
         .container {
@@ -97,6 +98,7 @@
             display: flex;
             flex-direction: column;
             border-bottom: 4px solid transparent;
+            cursor: pointer;
         }
 
         .news-card:hover {
@@ -148,13 +150,74 @@
             transition: 0.2s;
         }
 
-        .read-more:hover {
-            gap: 10px;
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 850px;
+            max-height: 85vh;
+            border-radius: 30px;
+            position: relative;
+            padding: 40px;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(70px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: sticky;
+            top: 0;
+            float: left;
+            font-size: 2.5rem;
+            color: #999;
+            cursor: pointer;
+            transition: 0.3s;
+            line-height: 1;
+            z-index: 10;
+        }
+
+        .close-modal:hover { color: var(--secondary); }
+
+        .modal-body h2 { color: var(--primary); font-size: 2.2rem; margin-bottom: 20px; border-bottom: 3px solid var(--bg-light); padding-bottom: 15px; }
+        .modal-body h3 { color: var(--secondary); margin: 30px 0 15px; font-size: 1.6rem; font-weight: 800; }
+        .modal-body p { margin-bottom: 15px; font-size: 1.15rem; color: #444; }
+        .modal-body ul { margin-right: 25px; margin-bottom: 20px; }
+        .modal-body li { margin-bottom: 10px; font-size: 1.1rem; }
+        .modal-body code { background: #f0f0f0; padding: 4px 10px; border-radius: 6px; font-family: monospace; color: #d63384; font-weight: bold; }
+
+        .template-box {
+            background: #f4f9f4;
+            border-right: 5px solid var(--primary);
+            padding: 25px;
+            margin: 25px 0;
+            direction: ltr;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            white-space: pre-line;
+            font-size: 1rem;
+            border-radius: 10px;
+            color: #333;
         }
 
         /* Special Banner */
         .featured-banner {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
             background-color: var(--primary);
             border-radius: 25px;
             padding: 40px;
@@ -167,16 +230,8 @@
             flex-wrap: wrap;
         }
 
-        .banner-text {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .banner-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
+        .banner-text { flex: 1; min-width: 300px; }
+        .banner-text h3 { font-size: 1.8rem; margin-bottom: 15px; }
         .banner-btn {
             background: var(--secondary);
             color: white;
@@ -186,21 +241,14 @@
             font-weight: bold;
             transition: 0.3s;
         }
+        .banner-btn:hover { background: white; color: var(--primary); }
 
-        .banner-btn:hover {
-            background: white;
-            color: var(--primary);
-        }
-
-        footer {
-            text-align: center;
-            padding: 60px 0 30px;
-            color: #777;
-        }
+        footer { text-align: center; padding: 60px 0 30px; color: #777; }
 
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
-            .back-btn { position: relative; margin-bottom: 20px; justify-content: center; }
+            .modal-content { padding: 25px; }
+            .modal-body h2 { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -218,80 +266,325 @@
 
         <div class="news-grid">
 
-            <div class="news-card">
+            <div class="news-card" onclick="openModal('emailModal')">
                 <div class="card-content">
-                    <span class="card-tag">تطوير الذات</span>
-                    <i class="fas fa-brain"></i>
-                    <h2>فن اكتشاف الموهبة</h2>
-                    <p>كيف تبدأ رحلة البحث عن شغفك الحقيقي؟ وما هي الأدوات العلمية التي تساعدك على فهم نقاط قوتك المدفونة؟</p>
-                    <a href="#" class="read-more">اقرأ المقال كاملاً <i class="fas fa-chevron-left"></i></a>
+                    <span class="card-tag">دليل شامل</span>
+                    <i class="fas fa-envelope-open-text"></i>
+                    <h2>الدليل الشامل للاحتراف الرقمي</h2>
+                    <p>بريدك الإلكتروني هو مفتاحك للعالم. تعلم كيف تجعله احترافياً لتقتنص أهم المنح والفرص الدولية.</p>
+                    <span class="read-more">اقرأ المقال كاملاً <i class="fas fa-chevron-left"></i></span>
                 </div>
             </div>
 
-            <div class="news-card">
-                <div class="card-content">
-                    <span class="card-tag">علوم وتكنولوجيا</span>
-                    <i class="fas fa-microchip"></i>
-                    <h2>مستقبل الذكاء الاصطناعي</h2>
-                    <p>تعرف على كيف يغير الذكاء الاصطناعي وجه الوظائف المستقبلية وكيف يمكنك الاستعداد لهذا التحول الكبير.</p>
-                    <a href="#" class="read-more">اقرأ المقال كاملاً <i class="fas fa-chevron-left"></i></a>
-                </div>
-            </div>
 
-            <div class="news-card">
-                <div class="card-content">
-                    <span class="card-tag">إلهام</span>
-                    <i class="fas fa-rocket"></i>
-                    <h2>من الصفر إلى القمة</h2>
-                    <p>قصص واقعية لشباب استطاعوا تحويل مواهبهم البسيطة إلى مشاريع قومية وعالمية ملهمة.</p>
-                    <a href="#" class="read-more">اقرأ المقال كاملاً <i class="fas fa-chevron-left"></i></a>
-                </div>
-            </div>
 
-            <div class="news-card">
-                <div class="card-content">
-                    <span class="card-tag">توازن</span>
-                    <i class="fas fa-heartbeat"></i>
-                    <h2>صحتك النفسية والموهبة</h2>
-                    <p>العلاقة الوثيقة بين الإبداع والاستقرار النفسي، وكيف تحمي شغفك من الاحتراق المهني والملل.</p>
-                    <a href="#" class="read-more">اقرأ المقال كاملاً <i class="fas fa-chevron-left"></i></a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div class="card-content">
-                    <span class="card-tag">مهارات</span>
-                    <i class="fas fa-lightbulb"></i>
-                    <h2>التفكير الإبداعي</h2>
-                    <p>طرق وأساليب عملية لتدريب عقلك على التفكير خارج الصندوق وحل المشكلات بطرق غير تقليدية.</p>
-                    <a href="#" class="read-more">اقرأ المقال كاملاً <i class="fas fa-chevron-left"></i></a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div class="card-content">
-                    <span class="card-tag">بيئة</span>
-                    <i class="fas fa-globe-americas"></i>
-                    <h2>مواهب خضراء</h2>
-                    <p>كيف تساهم المواهب الشابة في حل مشكلات المناخ وتطوير حلول مستدامة من أجل مستقبل كوكبنا.</p>
-                    <a href="#" class="read-more">اقرأ المقال كاملاً <i class="fas fa-chevron-left"></i></a>
-                </div>
-            </div>
 
         </div>
 
         <div class="featured-banner">
             <div class="banner-text">
                 <h3>لا تفوت أي جديد من نبض المعرفة</h3>
-                <p>انضم لمجتمعنا الان لتحصل على احدث الفرص و المقالات!</p>
+                <p>انضم لمجتمعنا الآن لتحصل على أحدث الفرص والمقالات!</p>
             </div>
-            <a href="#" class="banner-btn">اشترك الآن</a>
+            <a href="#" class="banner-btn">انضم الآن</a>
         </div>
 
         <footer>
             <p>© 2026 مبادرة إنطلق - بكرة بينادينا. جميع الحقوق محفوظة.</p>
         </footer>
     </div>
+
+    <div id="emailModal" class="modal-overlay" onclick="closeModal(event, 'emailModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="forceClose('emailModal')">&times;</span>
+
+            <div class="modal-body">
+                <span class="card-tag">دليل شامل</span>
+                <h2>📧 البريد الإلكتروني: المحرك الصامت لمستقبلك المهني</h2>
+
+                <p>تخيل أن بريدك الإلكتروني هو "سفارتك الشخصية" في العالم الرقمي. هل ستسمح لسفارتك أن تكون فوضوية أو غير رسمية؟ بالتأكيد لا. في مبادرة "إنطلق"، نؤمن أن الفرق بين شاب يُقبل في منحة عالمية وشاب آخر يُرفض، قد لا يكون في المهارات، بل في "طريقة التواصل".
+و لهذا نؤمن باننا يمكننا اصلاح ذلك ليصبح من يرفض لا يُرفض، بل يُقبل.
+</p>
+                <h3>1️⃣ لماذا الإيميل هو أهم أداة عندك؟</h3>
+                <p>نحن نعيش في عصر "الستوري" الذي يختفي بعد 24 ساعة، والرسائل التي يمكن حذفها من الطرفين. لكن في عالم المؤسسات (الجامعات، المنظمات الدولية، الشركات الكبرى)، الكلمة المكتوبة في الإيميل هي العقد. إذا وعدتك جامعة بمنحة عبر الإيميل، فهذا مستند قانوني.
+</p>
+
+<p>الإيميل يسمح لك، وأنت في منزلك في أسوان أو قنا أو أي مكان في مصر، أن تخاطب بروفيسور في جامعة "هارفارد" أو مدير في "جوجل"  إنه "المساحة المتكافئة" التي لا تهتم بشكلك أو مكانك، مثل الرسائل في واتساب او انستاجرام لكن الفرق؟
+
+     <ul>
+                    <li><strong>الرسمية:</strong>  الايميل هو واجهتك أمام الجامعات والشركات.</li>
+                    <li><strong>التوثيق:</strong> الايميل هو مرجع قانوني لكل اتفاقاتك ومنحك.</li>
+                    <li><strong>الأمان:</strong>  الايميل هو أرشيفك الدائم بعيداً عن ضجيج السوشيال ميديا.</li>
+                </ul>
+
+
+</p>
+
+<p>الجهات المانحة ترسل "طلبات استيضاح". قد يطلبون منك تعديل ملف في ظرف ساعات. إذا كان إيميلك غارقاً في رسائل (فيسبوك وتيك توك)، ستضيع منك رسالة العمر.
+   <strong>  لذا تنظيف الإيميل ليس رفاهية، بل هو "صيانة لمستقبلك".</strong>
+</p>
+                <p>في عالم المؤسسات والجامعات، الإيميل هو الطريقة الرسمية الوحيدة للتعامل. إهمال الإيميل يعني ضياع فرص العمر لمجرد أنك لم تقرأ رسالة القبول في الوقت المناسب.</p>
+
+
+                <h3>2️⃣ كيف تنشئ إيميل احترافي؟</h3>
+
+                              <small> <p> و في هذا الشرح سوف نستخدم اسم
+                                <code>احمد محمد منصور</code>كمثالنا! </p></small>
+                <p>ان كان ايميلك ممتلأ او معبأ للغاية و ليس لديك وقت لتنظيفه و تريد ان تبدأ بداية جديده في عالم الايميلات فلنعدل و نحسن شكل الايميل من اول خطوه!.</p>
+                <p>ان كان شكل الايميل غير احترافي، فسيُعتبر "الرسالة المفقودة" في عالم المؤسسات. لا تستخدم أسماء مزيفة أو غير رسمية.</p>
+
+                <p>يجب أن يكون العنوان مشتقاً من اسمك الحقيقي، بعيداً عن الأسماء المستعارة:</p>
+                <p>✅ مثال صح: <code>Ahmed.Mansour@gmail.com</code></p>
+                <p>❌ مثال خطأ: <code>king_hero_2026@gmail.com</code></p>
+
+                <p>لكن هناك مشكلة شائعه جدا في عالم كتابة الايميلات و هي <strong>فغالباً الأسماء الثنائية البسيطة مثل <code>Ahmed.Ali</code> تكون محجوزة منذ سنوات</strong>
+               لكن الحل ليس في العودة للأسماء المستعارة! بل في استخدام "إضافات احترافية" تحافظ على مظهرك الرسمي. و هي:</p>
+
+
+
+               <br>
+               <br>
+
+               <i class="fas fa-lightbulb">
+               <h4 style="color: var(--accent); margin-bottom: 10px;">1. استخدام الاختصارات الذكية </h4>
+               </i>
+
+
+                <p>بدلاً من الاسم الثنائي الكامل، جرب دمج الحرف الأول من الاسم الأول مع اسم العائله،او العكس :</p>
+
+                <p>✅ مثال : <code>A.Mansour@gmail.com</code></p>
+                <p>✅ مثال : <code>Ahmed.M.Mansour@gmail.com</code></p>
+                <p>✅ مثال : <code>AMansour.edu@gmail.com</code></p>
+
+                <br>
+                <br>
+
+                  <i class="fas fa-lightbulb">
+               <h4 style="color: var(--accent); margin-bottom: 10px;">2. إضافة التخصص أو المهنة (طريقة قوية جداً)</h4>
+               </i>
+                <p>هذه طريقة ذكية جداً لإظهار تخصصك أو مهنتك في العنوان، مما يلفت انتباه الجهات المانحة ويعطي انطباعاً فورياً عن مجال اهتمامك.</p>
+
+                <p>✅ مثال : <code>Ahmed.Engineer@gmail.com</code></p>
+                <p>✅ مثال : <code>Mansour.Dev@gmail.com</code><small>(كلمة Dev اختصار لـ Developer)</small></p>
+                <p>✅ مثال : <code>Ahmed.Design@gmail.com</code></p>
+                <p>✅ مثال : <code>Dr.Ahmed.Mansour@gmail.com</code><small>(لمن لديهم شهادة دكتوراه)</small></p>
+
+                  <br>
+                <br>
+
+                 <i class="fas fa-lightbulb">
+               <h4 style="color: var(--accent); margin-bottom: 10px;">3. إضافة الرمز الجغرافي (EG)</h4>
+               </i>
+
+               <p>✅ مثال : <code>Ahmed.Mansour.EG@gmail.com</code></p>
+                <p>✅ مثال : <code>A.Mansour.Egypt@gmail.com</code></p>
+
+                  <br>
+                <br>
+
+                <i class="fas fa-lightbulb">
+               <h4 style="color: var(--accent); margin-bottom: 10px;">4. استخدام كلمات تدل على "الرسمية"</h4>
+               </i>
+
+               <p>يمكنك إضافة كلمات بسيطة في نهاية الاسم تعبر عن أن هذا هو بريدك للتواصل الرسمي:</p>
+
+                <p>✅ مثال : <code>Ahmed.Mansour.Official@gmail.com</code></p>
+                <p>✅ مثال : <code>Contact.AhmedMansour@gmail.com</code></p>
+                <p>✅ مثال : <code>Talkto.Ahmed@gmail.com</code></p>
+
+                  <br>
+                <br>
+
+                <i class="fas fa-lightbulb">
+               <h4 style="color: var(--accent); margin-bottom: 10px;">5. استخدام النقطة (.) أو الشرطة السفلية (_)</h4>
+               </i>
+                <p>هذه طريقة بسيطة لإضافة تمييز بين الأجزاء المختلفة من اسمك في العنوان، مما يجعله أكثر وضوحاً واحترافية.</p>
+                <p>✅ مثال : <code>Ahmed_Mansour@gmail.com</code></p>
+                <p>✅ مثال : <code>Ahmed.Mansour@gmail.com</code></p>
+
+                  <br>
+                <br>
+
+                <i class="fas fa-lightbulb">
+               <h4 style="color: var(--accent); margin-bottom: 10px;">6.قاعدة "المكانة الأكاديمية" (Academic Status)</h4>
+               </i>
+
+               <p>إذا كنت لا تزال طالباً أو باحثاً، يمكنك استغلال ذلك لإضفاء طابع "العلم والاجتهاد" على إيميلك:</p>
+                <p>✅ مثال : <code>استخدام Student: </code> مثل <code>Student.Ahmed.Mansour@gmail.com</code></p>
+                <p>✅ مثال : <code>استخدام Scholar: </code> مثل <code>Ahmed.Mansour.Scholar@gmail.com</code></p>
+                <p>✅ مثال : <code>إضافة اسم كليتك باختصار: </code> مثل <code>A.Mansour.Med@gmail.com</code> (للطب) او <code>A.Mansour.Eng@gmail.com</code> (للهندسة)</p>
+
+                  <br>
+                <br>
+
+                <i class="fas fa-lightbulb">
+               <h4 style="color: var(--accent); margin-bottom: 10px;">7. تبديل ترتيب الأسماء (The Inversion)</h4>
+               </i>
+
+                <p>هذه طريقة ذكية لإضفاء لمسة من التميز على إيميلك، خاصة إذا كان اسمك شائعاً. عن طريق تبديل ترتيب الأسماء أو استخدام الحروف الأولى بشكل غير تقليدي، يمكنك الحصول على عنوان فريد يلفت الانتباه.و هذه في الغرب، أحياناً يكون البدء باللقب (اسم العائلة) أكثر رسمية:</p>
+
+                <p>✅ مثال : <code>Mansour.Ahmed@gmail.com</code></p>
+                <p>✅ مثال : <code>Mansour.M.Ahmed@gmail.com</code></p>
+
+                 <br>
+                <br>
+
+                <i class="fas fa-lightbulb">
+               <h4 style="color: var(--accent); margin-bottom: 10px;">8. استخدام "الأفعال التفاعلية" (Actionable Prefixes)</h4>
+               </i>
+
+                <p>هذه طريقة مبتكرة لإضفاء طابع "التواصل الفعّال" على إيميلك، مما يعطي انطباعاً بأنك شخص مبادر ومتفاعل. عن طريق إضافة أفعال بسيطة في بداية العنوان، يمكنك جعل إيميلك يبدو كأنه "دعوة للتواصل" وليس مجرد عنوان بريدي.</p>
+                <p>✅ مثال : <code>Hello.AhmedMansour@gmail.com</code></p>
+                <p>✅ مثال : <code>Let's.Connect.AhmedMansour@gmail.com</code></p>
+                <p>✅ مثال : <code>Ask.AhmedMansour@gmail.com</code></p>
+                <p>✅ مثال : <code>Reach.AhmedMansour@gmail.com</code></p>
+                <p>✅ مثال : <code>Meet.AhmedMansour@gmail.com</code></p>
+                <p>✅ مثال : <code>Connect.Mansour@gmail.com</code></p>
+
+                 <br>
+                 <br>
+
+                <i class="fas fa-lightbulb">
+               <h4 style="color: var(--accent); margin-bottom: 10px;">9.إضافة "المهارة الأساسية" (Core Skill)</h4>
+               </i>
+                <p>إذا كان لديك مهارة أساسية تميزك في مجالك، يمكنك إضافتها إلى إيميلك لإبرازها فوراً أمام الجهات المانحة. هذا يعطي انطباعاً بأنك "خبير" في هذا المجال، مما يزيد من فرص جذب انتباههم.</p>
+                <p>✅ مثال : <code>AhmedMansour.Creative@gmail.com</code></p>
+                <p>✅ مثال : <code>Mansour.Writer@gmail.com</code></p>
+                <p>✅ مثال : <code>A.Mansour.Analyst@gmail.com</code></p>
+
+
+                 <br>
+                 <br>
+
+                <i class="fas fa-lightbulb">
+               <h4 style="color: var(--accent); margin-bottom: 10px;">10. التوجه نحو "النطاقات البديلة" (Alternative Domains)</h4>
+               </i>
+
+               <p>إذا كان اسمك محجوزاً تماماً على Gmail ، لا تضف أرقاماً مشوهة، بل غير الشركة المزودة بالكامل!</p>
+
+                <p>✅ مثال : <code>Outlook</code> مثل <code>Ahmed.Mansour@outlook.com</code></p>
+                <p>✅ مثال : <code>Yahoo</code> مثل <code>Ahmed.Mansour@yahoo.com</code></p>
+                <p>✅ مثال : <code>ProtonMail</code> مثل <code>Ahmed.Mansour@protonmail.com</code> or <code>Ahmed.Mansour@proton.me</code></p>
+                <p>✅ مثال : <code>iCloud</code>في حالة ان لديك جهاز ابل مثل <code>Ahmed.Mansour@icloud.com</code> </p>
+
+
+                <br>
+                <br>
+
+                <h3>⚠️ محذورات (ابتعد عنها تماماً):</h3>
+
+                <ul>
+
+                    <li><strong>الأرقام العشوائية الكثيرة:</strong>لا تستخدم <code>AhmedMansour9988221@gmail.com</code>. (إذا كان لا بد من رقم، استخدم سنة ميلادك أو سنة التخرج فقط مثل <code>Ahmed.Mansour2026</code>).</li>
+                    <li><strong>الرموز الغريبة:</strong> لا تستخدم أرقاماً بدلاً من الحروف (مثل استخدام 3 بدلاً من ع).</li>
+                    <li><strong>التكرار الممل:</strong> لا تستخدم<code>Ahmedaaaaa.Mansour@gmail.com</code>.</li>
+                    <li><strong>الأسماء المستعارة غير الرسمية:</strong> لا تستخدم أسماء مثل <code>ahmed.mansour.cool@gmail.com</code> أو <code>ahmed.mansour.wowwww@gmail.com</code>.</li>
+                    <li><strong>الكلمات غير اللائقة:</strong> تجنب الكلمات التي قد تُعتبر غير مهنية أو غير لائقة في أي ثقافة.</li>
+                    <li><strong>الاختصارات الغامضة:</strong> تجنب استخدام اختصارات قد لا تكون مفهومة للجميع، خاصة إذا كانت غير شائعة في المجال الأكاديمي أو المهني.</li>
+
+                    <br>
+
+
+
+                <h3>3️⃣ 🖋️ ما هو التوقيع الإلكتروني للإيميل؟ (Email Signature)</h3>
+
+                <p>التوقيع الإلكتروني هو عبارة عن كتلة نصية (وأحياناً صور وروابط) يتم ضبطها مسبقاً في إعدادات بريدك الإلكتروني، لتظهر تلقائياً في نهاية كل رسالة ترسلها.</p>
+                <p>فكر فيه كأنه "كارت العمل الشخصي" (Business Card) ولكن بنسخة رقمية، يخبر الشخص الذي يتلقى رسالتك (سواء كان أستاذاً جامعياً أو مسؤول منح) من أنت وكيف يمكنه التواصل معك بشكل أعمق.</p>
+                <p>التوقيع الجيد لا يقتصر فقط على ذكر اسمك، بل يجب أن يتضمن معلومات أساسية مثل تخصصك، الجامعة التي تدرس بها، وأي روابط مهمة مثل حساباتك المهنية على لينكدإن أو موقعك الشخصي إذا كان لديك واحد.</p>
+
+                <div style="background: #fff8f0; padding: 15px; border-radius: 10px; border-right: 4px solid var(--secondary); margin: 20px 0;">
+
+
+
+                    <p><strong>📺 تعلم صناعة التوقيع:</strong></p>
+
+                     <iframe width="560" height="315" src="https://www.youtube.com/embed/cUf29sCougM?si=aaNKCnxXPjU1B0V9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+                </div>
+
+                <p>او ابحث في يوتيوب عن شرح القيام بعمل توقيع الكاتروني بالايميل و اكتب شركة الايميل الخاصه بايميلك سواء yahoo او outlook او gmail الخ الخ</p>
+                  <p>ابحث في يوتيوب عن "شرح signature للإيميل" لتجعل مراسلاتك تبدو كالمحترفين.</p>
+
+                  <br>
+                  <br>
+                  <br>
+
+                <h3>4️⃣ و الان اهم جزء و هو تعلم كيفية كتابة الايميلات</h3>
+
+ <div style="background: #fff8f0; padding: 15px; border-radius: 10px; border-right: 4px solid var(--secondary); margin: 20px 0;">
+
+
+
+                    <p><strong>📺 تعلم كتابة الايميلات:</strong></p>
+
+                  <iframe width="560" height="315" src="https://www.youtube.com/embed/An1REk5-DvQ?si=xXTQymEKVfkVFY9K" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+                </div>
+
+
+
+
+
+                <div style="margin-top: 50px; padding: 40px 20px; background-color: #f4f9f4; border-radius: 25px; text-align: center;  position: relative;">
+
+    <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 1.8rem; font-weight: 900;">🏁 كلمة ختامية: مستقبلك يبدأ من "صندوق الوارد"</h3>
+
+    <p style="font-size: 1.15rem; color: #444; max-width: 750px; margin: 0 auto 25px; line-height: 1.8;">
+        تذكر دائماً أن بريدك الإلكتروني ليس مجرد تطبيق على هاتفك، بل هو هويتك أمام العالم، وجسرك نحو مؤسسات لم تكن تحلم بالوصول إليها. نحن في <strong> "إنطلق"</strong> نؤمن أن الفرق بين الطموح والوصول هو مجرد خطوات بسيطة من التنظيم والاحترافية.
+    </p>
+
+    <div style="font-style: italic; color: var(--secondary); font-size: 1.3rem; font-weight: bold; margin: 30px 0; padding: 10px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; display: inline-block;">
+        "العالم لا يعطيك ما تستحقه، بل يعطيك ما تستطيع أن تطلبه باحترافية."
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 10px; margin: 25px 0; flex-wrap: wrap;">
+        <span style="background: var(--primary); color: white; padding: 6px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: bold;">#إنطلق_بذكاء</span>
+        <span style="background: var(--primary); color: white; padding: 6px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: bold;">#بكرة_بينادينا</span>
+        <span style="background: var(--primary); color: white; padding: 6px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: bold;">#نبض_المعرفة</span>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <button onclick="forceClose('emailModal')" style="background: var(--primary); color: white; border: none; padding: 12px 50px; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1.1rem; margin-top: 30px; transition: 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        أنهيت القراءة.. سأبدأ الآن! 🚀
+    </button>
+</div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).style.display = "flex";
+            document.body.style.overflow = "hidden"; // منع التمرير في الخلفية
+        }
+
+        function closeModal(event, id) {
+            // إغلاق عند الضغط على الطبقة السوداء خلف النافذة
+            if (event.target.id === id) {
+                forceClose(id);
+            }
+        }
+
+        function forceClose(id) {
+            document.getElementById(id).style.display = "none";
+            document.body.style.overflow = "visible"; // إعادة شريط التمرير للعمل فوراً
+        }
+    </script>
 
 </body>
 </html>
